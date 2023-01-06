@@ -12,7 +12,7 @@ export abstract class BaseController {
     this._router = Router();
   }
 
-  get router(): Router {
+  public get router(): Router {
     return this._router;
   }
 
