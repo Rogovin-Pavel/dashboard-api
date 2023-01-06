@@ -1,7 +1,8 @@
-import { BaseController } from '../common/base.controller';
 import { ILogger } from '../logger/logger.interface';
+import { HTTPError } from '../errors/http-error.class';
+import { BaseController } from '../common/base.controller';
 
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 export class UsersController extends BaseController {
   constructor(logger: ILogger) {
@@ -20,11 +21,12 @@ export class UsersController extends BaseController {
     ]);
   }
 
-  private login = (_: Request, res: Response) => {
-    this.ok<string>(res, 'Login is successful');
+  private login = (_: Request, res: Response, next: NextFunction) => {
+    // this.ok<string>(res, 'Login is successful');
+    next(new HTTPError(401, 'Authorization error', 'login'));
   };
 
-  private register = (_: Request, res: Response) => {
+  private register = (_: Request, res: Response, next: NextFunction) => {
     this.ok<string>(res, 'Register is successful');
   };
 }
