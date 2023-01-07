@@ -6,6 +6,8 @@ import { ILogger } from '../logger/logger.interface';
 import { HTTPError } from '../errors/http-error.class';
 import { BaseController } from '../common/base.controller';
 import { IUsersController } from './users.controller.interface';
+import { UserLoginDto } from './dto/user-login.dto';
+import { UserRegisterDto } from './dto/user-register.dto';
 
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
@@ -25,12 +27,11 @@ export class UsersController extends BaseController implements IUsersController 
     ]);
   }
 
-  login(_: Request, res: Response, next: NextFunction): void {
-    // this.ok<string>(res, 'Login is successful');
+  login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction): void {
     next(new HTTPError(401, 'Authorization error', 'login'));
   }
 
-  register(_: Request, res: Response, next: NextFunction): void {
+  register(req: Request<{}, {}, UserRegisterDto>, res: Response, next: NextFunction): void {
     this.ok<string>(res, 'Register is successful');
   }
 }
