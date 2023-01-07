@@ -16,7 +16,10 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<App>(TYPES.Application).to(App);
 });
 
-const bootstrap = () => {
+const bootstrap = (): {
+  app: App;
+  appContainer: Container;
+} => {
   const appContainer = new Container();
   appContainer.load(appBindings);
 

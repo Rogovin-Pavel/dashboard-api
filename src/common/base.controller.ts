@@ -32,7 +32,7 @@ export abstract class BaseController {
     return res.sendStatus(201);
   }
 
-  protected bindRoutes(routes: IControllerRoute[]) {
+  protected bindRoutes(routes: IControllerRoute[]): void {
     for (const route of routes) {
       const { method, path, func } = route;
       const handler = func.bind(this);
