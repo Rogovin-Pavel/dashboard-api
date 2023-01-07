@@ -25,12 +25,12 @@ export class UsersController extends BaseController implements IUsersController 
     ]);
   }
 
-  login(_: Request, res: Response, next: NextFunction) {
+  login(_: Request, res: Response, next: NextFunction): void {
     // this.ok<string>(res, 'Login is successful');
     next(new HTTPError(401, 'Authorization error', 'login'));
   }
 
-  register(_: Request, res: Response, next: NextFunction) {
+  register(_: Request, res: Response, next: NextFunction): void {
     this.ok<string>(res, 'Register is successful');
   }
 }
