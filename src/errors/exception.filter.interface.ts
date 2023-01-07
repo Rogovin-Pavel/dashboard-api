@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+
 import { HTTPError } from './http-error.class.js';
 
 export interface IExceptionFilter {

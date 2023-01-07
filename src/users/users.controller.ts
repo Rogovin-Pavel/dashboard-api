@@ -1,12 +1,16 @@
+import { inject, injectable } from 'inversify';
+import { Request, Response, NextFunction } from 'express';
+
+import { TYPES } from '../types';
 import { ILogger } from '../logger/logger.interface';
 import { HTTPError } from '../errors/http-error.class';
 import { BaseController } from '../common/base.controller';
+import { IUsersController } from './users.controller.interface';
 
-import { Request, Response, NextFunction } from 'express';
-
-export class UsersController extends BaseController {
-  constructor(logger: ILogger) {
-    super(logger);
+@injectable()
+export class UsersController extends BaseController implements IUsersController {
+  constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
+    super(loggerService);
     this.bindRoutes([
       {
         path: '/login',
@@ -21,12 +25,12 @@ export class UsersController extends BaseController {
     ]);
   }
 
-  private login = (_: Request, res: Response, next: NextFunction) => {
+  login(_: Request, res: Response, next: NextFunction) {
     // this.ok<string>(res, 'Login is successful');
     next(new HTTPError(401, 'Authorization error', 'login'));
-  };
+  }
 
-  private register = (_: Request, res: Response, next: NextFunction) => {
+  register(_: Request, res: Response, next: NextFunction) {
     this.ok<string>(res, 'Register is successful');
-  };
+  }
 }
