@@ -6,6 +6,7 @@ import 'reflect-metadata';
 
 import { TYPES } from './types';
 import { ILogger } from './logger/logger.interface';
+import { IConfigService } from './config/config.service.interface';
 import { UsersController } from './users/users.controller';
 import { IExceptionFilter } from './errors/exception.filter.interface';
 
@@ -17,6 +18,7 @@ export class App {
 
   public constructor(
     @inject(TYPES.ILogger) private logger: ILogger,
+    @inject(TYPES.ConfigService) private configService: IConfigService,
     @inject(TYPES.UsersController) private usersController: UsersController,
     @inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
   ) {
