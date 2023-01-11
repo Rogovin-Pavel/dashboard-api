@@ -23,7 +23,6 @@ export class UsersService implements IUsersService {
     if (existedUser) {
       return null;
     }
-    // validate user in db. user ? null : new user
 
     return this.usersRepository.create(newUser);
   }
@@ -36,9 +35,5 @@ export class UsersService implements IUsersService {
     const isValid = await newUser.validatePassword(password);
 
     return isValid;
-  }
-
-  async validateUser(dto: UserLoginDto): Promise<boolean> {
-    return true;
   }
 }
