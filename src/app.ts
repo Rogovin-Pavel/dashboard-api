@@ -14,7 +14,7 @@ import { AuthMiddleware } from './common/auth.middleware';
 
 @injectable()
 export class App {
-  private app: Express;
+  app: Express;
   private port: number;
   private server: Server;
 
@@ -50,5 +50,9 @@ export class App {
     await this.prismaService.connect();
     this.server = this.app.listen(this.port);
     this.logger.log(`Сверер запущен на http://localhost:${this.port}`);
+  }
+
+  public close(): void {
+    this.server.close();
   }
 }
