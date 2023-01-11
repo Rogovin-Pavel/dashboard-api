@@ -43,12 +43,12 @@ export class UsersController extends BaseController implements IUsersController 
     res: Response,
     next: NextFunction,
   ): Promise<void> {
-    const newUser = await this.usersService.createUser(body);
+    const result = await this.usersService.createUser(body);
 
-    if (!newUser) {
+    if (!result) {
       return next(new HTTPError(422, 'User is already registered', 'register'));
     }
 
-    this.ok(res, newUser);
+    this.ok(res, { email: result.email, id: result.id });
   }
 }
