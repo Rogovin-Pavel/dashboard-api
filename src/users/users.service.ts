@@ -36,4 +36,8 @@ export class UsersService implements IUsersService {
 
     return isValid;
   }
+
+  async getUserInfo(email: string): Promise<UserModel | null> {
+    return this.usersRepository.find(email);
+  }
 }
