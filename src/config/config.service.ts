@@ -19,7 +19,7 @@ export class ConfigService implements IConfigService {
     }
   }
 
-  get(key: string): string | undefined {
-    return this.config ? this.config[key] : undefined;
+  get(key: string): string {
+    return this.config![key];
   }
 }
