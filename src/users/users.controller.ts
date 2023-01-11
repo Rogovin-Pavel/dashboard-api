@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response, NextFunction } from 'express';
 
-import { User } from './user.entity';
 import { TYPES } from '../types';
 import { ILogger } from '../logger/logger.interface';
 import { HTTPError } from '../errors/http-error.class';
@@ -24,6 +23,7 @@ export class UsersController extends BaseController implements IUsersController 
         path: '/login',
         method: 'post',
         func: this.login,
+        middlewares: [new ValidateMiddleware(UserLoginDto)],
       },
       {
         path: '/register',
@@ -34,8 +34,18 @@ export class UsersController extends BaseController implements IUsersController 
     ]);
   }
 
-  login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction): void {
-    next(new HTTPError(401, 'Authorization error', 'login'));
+  async login(
+    { body }: Request<{}, {}, UserLoginDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    const result = await this.usersService.login(body);
+
+    if (!result) {
+      return next(new HTTPError(401, 'Authorization error', 'login'));
+    }
+
+    this.ok(res, 'authorized');
   }
 
   async register(
